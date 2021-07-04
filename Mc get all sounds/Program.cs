@@ -42,7 +42,7 @@ namespace Mc_get_all_sounds
                 {
                     case ConsoleKey.Enter:
                         Extract(Versions[Index]);
-                        break;
+                        return;
                     case ConsoleKey.Escape:
                         return;
                     case ConsoleKey.UpArrow:
@@ -104,29 +104,31 @@ namespace Mc_get_all_sounds
                         break;
                     }
                 }
-                byte[] soundBytes = File.ReadAllBytes(SoundObject);
-
-                string[] split = soundData.Filename.Split('/');
-
-                string Filen = split.Last();
-                string pth = string.Join(@"\", split.Take(split.Count() - 1));
-
-                Directory.CreateDirectory(VersionFolder + @"\" + pth);
-                bool exists = File.Exists($@"{VersionFolder}\{pth}\{Filen}");
-                if (!exists)
+                if (File.Exists(SoundObject))
                 {
-                    File.WriteAllBytes($@"{VersionFolder}\{pth}\{Filen}", soundBytes);
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Done.");
-                    Console.ForegroundColor = DefaultC;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine("Exists.");
-                    Console.ForegroundColor = DefaultC;
-                }
+                    byte[] soundBytes = File.ReadAllBytes(SoundObject);
 
+                    string[] split = soundData.Filename.Split('/');
+
+                    string Filen = split.Last();
+                    string pth = string.Join(@"\", split.Take(split.Count() - 1));
+
+                    Directory.CreateDirectory(VersionFolder + @"\" + pth);
+                    bool exists = File.Exists($@"{VersionFolder}\{pth}\{Filen}");
+                    if (!exists)
+                    {
+                        File.WriteAllBytes($@"{VersionFolder}\{pth}\{Filen}", soundBytes);
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Done.");
+                        Console.ForegroundColor = DefaultC;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("Exists.");
+                        Console.ForegroundColor = DefaultC;
+                    }
+                }
             }
             Console.WriteLine("\nDone.");
             Console.ReadKey();
