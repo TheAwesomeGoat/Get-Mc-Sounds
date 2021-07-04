@@ -1,3 +1,4 @@
+## Information
 Minecraft needs to be installed.  
 
 It gets the `minecraft\assets\indexes\` Json's:  
